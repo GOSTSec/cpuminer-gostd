@@ -105,6 +105,7 @@ enum sha256_algos {
 	ALGO_SHA256D,		/* SHA-256d */
 	ALGO_QUARK,
 	ALGO_X,
+	ALGO_GOSTD
 };
 
 static const char *algo_names[] = {
@@ -112,6 +113,7 @@ static const char *algo_names[] = {
 	[ALGO_SHA256D]		= "sha256d",
 	[ALGO_QUARK]		= "quark",
 	[ALGO_X]			= "X11",
+	[ALGO_GOSTD]		= "gostd",
 };
 
 bool opt_hashdebug = false;
@@ -794,6 +796,10 @@ static void *miner_thread(void *userdata)
 			break;
 		case ALGO_X:
 			rc = scanhash_X(thr_id, work.data, work.target,
+			                      max_nonce, &hashes_done);
+			break;
+		case ALGO_GOSTD:
+			rc = scanhash_gostd(thr_id, work.data, work.target,
 			                      max_nonce, &hashes_done);
 			break;
 		default:
