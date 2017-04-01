@@ -1099,6 +1099,7 @@ sph_gost512_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
 int scanhash_gostd(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
 	uint32_t max_nonce, unsigned long *hashes_done)
 {
+	// pdata is 80 = 20 of uint32_t in LittleEndian each
 	uint32_t data[80] __attribute__((aligned(128)));
 	uint32_t hash[8] __attribute__((aligned(32)));
 	uint32_t digest[16] __attribute__((aligned(64)));	
@@ -1110,12 +1111,12 @@ int scanhash_gostd(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
 	
 	do 
 	{
-		data[3] = ++n;
+		data[19] = ++n;
 		sph_gost512 (digest, data, 80);
 		sph_gost256 (hash, digest, 64); 
 		if (swab32(hash[7]) <= Htarg) 
 		{
-			pdata[19] = data[3];
+			pdata[19] = data[19];
 			*hashes_done = n - first_nonce + 1;
 			return 1;
 		}
