@@ -1099,16 +1099,16 @@ sph_gost512_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
 int scanhash_gostd(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
 	uint32_t max_nonce, unsigned long *hashes_done)
 {
-	// pdata is 80 = 20 of uint32_t, little endian decoded already
-	uint32_t data[80] __attribute__((aligned(128)));
+	uint32_t data[20] __attribute__((aligned(128)));
 	uint32_t hash[8] __attribute__((aligned(32)));
 	uint32_t digest[16] __attribute__((aligned(64)));	
-	uint32_t n = pdata[19] - 1;
-	const uint32_t first_nonce = pdata[19];
 	const uint32_t Htarg = ptarget[7];
 	
-	memcpy(data, pdata, 80);
-	
+	for (int i = 0; i < 20; i++)
+		data[i] = swab32(pdata[i]);
+	uint32_t n = data[19] - 1;	
+	const uint32_t first_nonce = data[19];
+
 	do 
 	{
 		data[19] = ++n;
@@ -1116,14 +1116,14 @@ int scanhash_gostd(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
 		sph_gost256 (hash, digest, 64); 
 		if (swab32(hash[0]) <= Htarg) 
 		{
-			pdata[19] = data[19];
+			pdata[19] = swab32 (data[19]);
 			*hashes_done = n - first_nonce + 1;
 			return 1;
 		}
 	} while (n < max_nonce && !work_restart[thr_id].restart);
 	
 	*hashes_done = n - first_nonce + 1;
-	pdata[19] = n;
+	pdata[19] = swab32(n);
 	return 0;
 }
 
