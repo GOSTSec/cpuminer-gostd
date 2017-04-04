@@ -1104,10 +1104,10 @@ int scanhash_gostd(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
 	uint32_t digest[16] __attribute__((aligned(64)));	
 	const uint32_t Htarg = ptarget[7];
 	
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 19; i++) // revert everything but nonce
 		data[i] = swab32(pdata[i]);
-	uint32_t n = data[19] - 1;	
-	const uint32_t first_nonce = data[19];
+	uint32_t n = pdata[19] - 1;	
+	const uint32_t first_nonce = pdata[19];
 
 	do 
 	{
