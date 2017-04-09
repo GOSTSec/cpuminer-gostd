@@ -1,2 +1,2 @@
-Run with you gostcoin wallet app
+Run with your gostcoin wallet app
 ./minerd -a gostd -t <number of cores> -o http://127.0.0.1:9376 -u <your RPC user> -p <you RPC password>
