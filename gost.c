@@ -1116,6 +1116,8 @@ int scanhash_gostd(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
 		sph_gost256 (hash, digest, 64); 
 		if (swab32(hash[0]) <= Htarg) 
 		{
+			if (!Htarg && swab32(hash[1]) > ptarget[6]) // if difficulty >= 1 
+				continue;
 			pdata[19] = swab32 (data[19]);
 			*hashes_done = n - first_nonce + 1;
 			return 1;
