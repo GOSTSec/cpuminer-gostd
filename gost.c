@@ -5,7 +5,7 @@
  * ==========================(LICENSE BEGIN)============================
  *
  * Copyright (c) 2007-2010  Projet RNRT SAPHIR
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -13,10 +13,10 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -665,6 +665,52 @@ const unsigned char C[12][64] = {
 		}
 };
 
+static const uint64_t F0[8] = // F(0)
+{
+	0x74a5d4ce2efc83b3, 0x74a5d4ce2efc83b3, 0x74a5d4ce2efc83b3, 0x74a5d4ce2efc83b3,
+	0x74a5d4ce2efc83b3, 0x74a5d4ce2efc83b3, 0x74a5d4ce2efc83b3, 0x74a5d4ce2efc83b3
+};
+
+static const uint64_t CC_F0[12][8] = 
+{
+	{ 0x8FD72F640708B0D0, 0x0DE874C7EBC3F213, 0xE92EEF3AD202E9E0, 0xC1E9DA0708013DA7, 0x9727DAB2F014BE88, 0x103051A02BCD6935, 0x33EC7E1DBD28F736, 0x1ECF460CF78AD1F4 },
+	{ 0x0B2D9F89C775449D, 0x6B6EEFC6DAB7E8B0, 0xF1A0D31667F6EC44, 0x2A71132D5E108166, 0x0E9357C2EC87931A, 0xC99F5C1B4A01612D, 0x7E60B16E637D4EE2, 0xA9FCB827F9BA6D81 },
+	{ 0x231FECA5AB3D285C, 0x70C6E1483C838C3B, 0x9C21C3C40CE4E2DA, 0x2FA796BD5688E573, 0x04C0E3FF55809FDF, 0x5FF978BFB8E3CDC8, 0xC54A19D6A3D07033, 0x0FCA83FDDE872478 },
+	{ 0xBDF9312726339F10, 0x51A5BA1793BC9C56, 0xC4428DA14F96D2D4, 0xEC925222374EAB1F, 0x79477893747DD92F, 0xC495E19A46886304, 0x9C23F893BA7CFA36, 0x0C47268881FC5FEB },
+	{ 0xCF117966029B2CB3, 0x07179ABE77088A8F, 0x671EF4CC2650E257, 0x7474B8B170DAB5C6, 0x4224FEBECF35113E, 0x993D156C675C5537, 0x2DEE3A5782C39B45, 0xE7C586F2990DD385 },
+	{ 0x8608FD95B1C1138A, 0x8BB0847D9E9849AC, 0x5E76623F4F0EB0C7, 0x34C2BDBAFC5060CE, 0xE9E814475907826C, 0x22C9ED94D6AAC7C9, 0xE6B75E28171EB0D6, 0xF1329E5534E60215 },
+	{ 0x86BB4814B1C3CE52, 0xE8F226C9FBDDD017, 0xCEDED67991CB3087, 0x76C33E32FDBFACA5, 0xDBB13BE1A9F7474C, 0x3D0273470342C356, 0x8E7246C51CF07F61, 0xAC8C125DDEF8DF71 },
+	{ 0x6D73E747795B8CF3, 0x4E4AA65EA0072050, 0xA14A1582CB43C2B9, 0x748EF2B7BB63B938, 0x126789534410D7D4, 0xD4D48FF40301D791, 0xC67DFBE315C41FC0, 0x35E7A1A1AF88601C },
+	{ 0x9BD33EA0FAB34007, 0xF51B7CDBE3D67D25, 0xD3ABDA0CE4186E6B, 0x8E61DDADCBCE1706, 0x58994565B41BE6A5, 0x7A87ABC1240CD31D, 0xFAFE6C28487968D0, 0x15B368609FF9EEA7 },
+	{ 0xAE33263CCF115818, 0x93B2DBE9CADFCFC8, 0x0A91952BF91B0147, 0x458E67CA5F1ED73A, 0x94C2E5F288F074E3, 0x377895E85C69E996, 0xF11A4456AAB37B10, 0x163131934816821A },
+	{ 0xD07E4A2366BF469D, 0x5EF1A3D220213B6C, 0x3C5BB78971D8ED0F, 0x0DE05E6B9006F2D2, 0xC58CFB00B8EAA1C9, 0xEFCDB54D1F250B76, 0xFD135634FA527042, 0x4CEE791290516407 },
+	{ 0xD800B9264010790F, 0x974C4823E2B668D7, 0xA605A4B385C5E361, 0x3F6C92DA5A56D8D2, 0x82B9D67C12EF8277, 0x0AB6B4582561BF90, 0x46954FD98FC2CBA3, 0x70BE45CB21B6760D }
+};
+
+static const uint64_t F1[8] = // F(1)
+{
+	0x155f7bb040eec523, 0x155f7bb040eec523, 0x155f7bb040eec523, 0x155f7bb040eec523,
+	0x155f7bb040eec523, 0x155f7bb040eec523, 0x155f7bb040eec523, 0x155f7bb040eec523
+};
+
+static const uint64_t CC_F1[12][8] = 
+{
+	{ 0xeaebb276318fee18, 0xea4c693382cbd63b, 0xbf26be88df699734, 0x49a504a9b6fa1c45, 0xb1666aa693de22da, 0x113563ea5e6b7e9c, 0xcdbf01848cd611e6, 0xb95e4a9dc30c7d0c }, 
+	{ 0x919565a231cfa4aa, 0x46fde791cec8ae57, 0xe3c56411e2de27bf, 0x1f9d9e511aba0b94, 0x57773e25f11309ce, 0x2ce14b67cd005091, 0x00fb26ba738ef6c7, 0x2d5f800141af74fd }, 
+	{ 0xf57a17cc650afe61, 0x26d3deadafe23502, 0xf87b7436229a32a5, 0x85459ccaae2842a5, 0x0d3a74dda91e80cd, 0x330e2b60f01ed098, 0x56c16add5dfb6720, 0x8692832019310082 }, 
+	{ 0x6f63d34f5f688399, 0xa826bf5fb7abd51f, 0x3ecb2eaa144393e2, 0x4e7d6cc0863c69e4, 0x61e175af40d59b16, 0xba60d963cd6a540a, 0x69bf99c14c3995d5, 0x5a3de79f30d5a599 }, 
+	{ 0x25f0e72cae7257f0, 0xfdb8c6bc7f9a6c15, 0x326e9413d635e7f1, 0xeaff2028e5942992, 0x1a55b07e905d6162, 0x882060860a9970d1, 0xe2b0cd223cc898af, 0x56a1f7c0137c29be }, 
+	{ 0x4e6e5462c344d15a, 0xb7fb298868e7b346, 0x33741921c3e95374, 0xacb5e26b0e8d2b0b, 0x59f16751b3b69ec8, 0xa659593ea405b0b7, 0x98408efc8cb1a951, 0x8dbbcf819b3df0fc }, 
+	{ 0x8d0aa21b9aec6c6a, 0x2b3534b940a84fb6, 0x2a1230d58e638c51, 0xc9daefb8e02f3383, 0xc709f5a9e5878201, 0x6f42d5dc6a746c8d, 0x3fb7df9057ada0b0, 0xaa6d0139a591f1c1 }, 
+	{ 0xb3a97a7336702199, 0x51bd05f743668d8a, 0xc50f8f941f5351f3, 0xbdd89dee5fa35fe3, 0x9c4e220a589d4cbb, 0xed49fc69200e2ed8, 0x38354437945f7d36, 0x0904ddf5a8b68f2b }, 
+	{ 0x1afa89fcc0636790, 0xda9d9eecd88892e6, 0xfec3d6bfe830769a, 0xafae622e5dc303d7, 0x7f7a31a7805db3f0, 0x916752f22230f876, 0x7b33cb8f67df8fca, 0xd205cb3c39e54fd7 }, 
+	{ 0x648e61636c99ce88, 0x8533e43ee0c8a504, 0xbb9189e6eee32a4e, 0x6edbda389dc2f3bf, 0xdf6ddca6e9daa1d6, 0xd3962f27af34ce52, 0xe1e63f4c628c9c15, 0xd5ad89fc0b5c693d }, 
+	{ 0x0646bda91e280a3e, 0x3a6f57000155ec3e, 0x579182cf68a16a50, 0x382fa3cafc78b976, 0x45ca8299c7305fb5, 0x778479d865838e62, 0x2a119981c6495ae7, 0xdbf255760f5a7b1d }, 
+	{ 0xeb1ab39e4073b2f0, 0x22216718aefb32e4, 0xf9926a2b4248c862, 0x838bd14eb5ba6c3f, 0xa33f1ec5ff1cb214, 0xdb6aef763e43ff19, 0xa17f903ce0f5f90e, 0x03bf0065a0ecf9fc }
+};
+
+
+#define FULL_UNROLL
 
 void AddModulo512(const void *a,const void *b,void *c)
 {
@@ -773,9 +819,32 @@ void AddXor512(const void *a,const void *b,void *c)
 #endif
 }
 
-void F(unsigned char *state)
+void AddXor512_3(const uint64_t * A, const uint64_t *B, uint64_t *C)
 {
-	unsigned long long return_state[8];
+	C[0] ^= A[0] ^ B[0];
+	C[1] ^= A[1] ^ B[1];
+	C[2] ^= A[2] ^ B[2];
+	C[3] ^= A[3] ^ B[3];
+	C[4] ^= A[4] ^ B[4];
+	C[5] ^= A[5] ^ B[5];
+	C[6] ^= A[6] ^ B[6];
+	C[7] ^= A[7] ^ B[7];
+}
+
+void AddXor512_c(const uint64_t * A, const uint64_t *B, uint64_t c, uint64_t *C)
+{
+	C[0] = A[0] ^ B[0] ^ c;
+	C[1] = A[1] ^ B[1] ^ c;
+	C[2] = A[2] ^ B[2] ^ c;
+	C[3] = A[3] ^ B[3] ^ c;
+	C[4] = A[4] ^ B[4] ^ c;
+	C[5] = A[5] ^ B[5] ^ c;
+	C[6] = A[6] ^ B[6] ^ c;
+	C[7] = A[7] ^ B[7] ^ c;
+}
+
+void FS(const unsigned char * state, uint64_t * return_state)
+{
 	register unsigned long long r = 0;
 	r ^= T[0][state[56]];
 	r ^= T[1][state[48]];
@@ -863,90 +932,149 @@ void F(unsigned char *state)
 	r ^= T[6][state[15]];
 	r ^= T[7][state[7]];
 	return_state[7] = r;
-
-	memcpy(state,(unsigned char*)return_state,64);
 }
 
-#define KeySchedule(K,i) AddXor512(K,C[i],K); F(K);
+void F(unsigned char *state)
+{
+	uint64_t return_state[8];
+	FS (state, return_state);
+	memcpy(state, return_state, 64);	
+}
 
-void E(unsigned char *K,const unsigned char *m, unsigned char *state)
+#define KeySchedule(tmp,K1,i) AddXor512(K1,C[i],tmp); FS((const unsigned char *)tmp,K1);
+
+void E(const unsigned char *K,const unsigned char *m, unsigned char *state)
 {
 #ifdef FULL_UNROLL
-	AddXor512(m,K,state);
+	uint64_t state1[8], K1[8];
 
-    F(state);
-    KeySchedule(K,0);
-    AddXor512(state,K,state);
+	memcpy (K1, K, 64);
+	AddXor512(m,K1,state);
 
-    F(state);
-    KeySchedule(K,1);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,0);
+	FS(state, state1);	
+    AddXor512(state1,K1,state);
 
-    F(state);
-    KeySchedule(K,2);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,1);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
 
-    F(state);
-    KeySchedule(K,3);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,2);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
 
-    F(state);
-    KeySchedule(K,4);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,3);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
 
-    F(state);
-    KeySchedule(K,5);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,4);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
 
-    F(state);
-    KeySchedule(K,6);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,5);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
 
-    F(state);
-    KeySchedule(K,7);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,6);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
 
-    F(state);
-    KeySchedule(K,8);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,7);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
 
-    F(state);
-    KeySchedule(K,9);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,8);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
 
-    F(state);
-    KeySchedule(K,10);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,9);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
 
-    F(state);
-    KeySchedule(K,11);
-    AddXor512(state,K,state);
+    KeySchedule(state1,K1,10);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
+
+    KeySchedule(state1,K1,11);
+	FS(state, state1);
+    AddXor512(state1,K1,state);
 #else
 	int i = 0;
+	uint64_t state1[8], K1[8];
 
-	AddXor512(m,K,state);
+	memcpy (K1, K, 64);
+	AddXor512(m,K1,state);
 
 	for(i=0;i<12;i++)
 	{
-		F(state);
-		KeySchedule(K,i);
-		AddXor512(state,K,state);
+		KeySchedule(state1, K1,i);
+		FS(state, state1);
+		AddXor512(state1,K1,state);
 	}
 #endif
 }
 
+static void E_F0(const unsigned char *m, unsigned char *state)
+{
+	AddXor512(m, F0, state);
+
+	int i = 0;
+	uint64_t state1[8];
+	for(i=0;i<12;i++)
+	{
+		FS(state, state1);
+		AddXor512(state1, CC_F0[i], state);
+	}
+}
+
+static void E_F1(const unsigned char *m, unsigned char *state)
+{
+	AddXor512(m, F1, state);
+
+	int i = 0;
+	uint64_t state1[8];
+	for(i=0;i<12;i++)
+	{
+		FS(state, state1);
+		AddXor512(state1, CC_F1[i], state);
+	}
+}
+
 static void g_N(const unsigned char *N,unsigned char *h,const unsigned char *m)
 {
-	unsigned char t[64], K[64];
+	uint64_t t[8], K[8];
 
-	AddXor512(N,h,K);
+	AddXor512(N, h, K);
 
-	F(K);
+	F((unsigned char *)K);
 
-	E(K,m,t);
+	E((unsigned char *)K,m,(unsigned char *)t);
 
-	AddXor512(t,h,t);
-	AddXor512(t,m,h);
+	AddXor512_3(t, (const uint64_t *)m, (uint64_t *)h);
+}
+
+static void g_0(unsigned char *h,const unsigned char *m)
+{
+	uint64_t t[8], K[8];
+	FS(h, K);
+
+	E((unsigned char *)K,m,(unsigned char *)t);
+
+	AddXor512_3 (t, (const uint64_t *)m, (uint64_t *)h);
+}
+
+static void g_0_0(unsigned char *h,const unsigned char *m) // input h assumed zero, for iv 512
+{
+	//E((const unsigned char *)F0, m, h);
+	E_F0 (m, h);
+	AddXor512(h,m,h);
+}
+
+static void g_0_1(unsigned char *h,const unsigned char *m) // input h assumed all bytes one, for iv 256
+{
+	//E((const unsigned char *)F1,m,h);
+	E_F1 (m, h);
+	AddXor512_c ((const uint64_t *)h, (const uint64_t *)m, 0x0101010101010101, (uint64_t *)h);
 }
 
 static void hash_X(unsigned char *IV,const unsigned char *message,unsigned long long length,unsigned char *out)
@@ -1037,35 +1165,27 @@ static void hash_256(const unsigned char *message,unsigned long long length,unsi
 	memcpy(out,hash,32);
 }
 
-
-
-
-
 /* see sph_gost.h */
-void
-sph_gost256_init(void *cc)
+void sph_gost256_init(void *cc)
 {
 	//gost_init(cc, 256);
 }
 
 /* see sph_gost.h */
-void
-sph_gost256(void *cc, const void *data, size_t len)
+void sph_gost256(void *cc, const void *data, size_t len)
 {
 	hash_256(data, len * 8, cc);
 }
 
 /* see sph_gost.h */
-void
-sph_gost256_close(void *cc, void *dst)
+void sph_gost256_close(void *cc, void *dst)
 {
 	//sph_gost256_addbits_and_close(cc, 0, 0, dst);
 	memcpy(dst, cc, 32);
 }
 
 /* see sph_gost.h */
-void
-sph_gost256_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
+void sph_gost256_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
 {
 	//gost_close32(cc, ub, n, dst);
 }
@@ -1090,45 +1210,91 @@ void sph_gost512_close(void *cc, void *dst)
 }
 
 /* see sph_gost.h */
-void
-sph_gost512_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
+void sph_gost512_addbits_and_close(void *cc, unsigned ub, unsigned n, void *dst)
 {
 	//gost_close64(cc, ub, n, dst);
+}
+
+/* see sph_gost.h */
+void sph_gostd(void *cc, const void *data, size_t len)
+{
+	unsigned char digest[64];
+	hash_512(data, len * 8, digest);
+	hash_256(digest, 64, cc);
 }
 
 int scanhash_gostd(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
 	uint32_t max_nonce, unsigned long *hashes_done)
 {
-	uint32_t data[20] __attribute__((aligned(128)));
-	uint32_t hash[8] __attribute__((aligned(32)));
-	uint32_t digest[16] __attribute__((aligned(64)));	
+	uint32_t block1[20] __attribute__((aligned(128)));
+	uint32_t block2[16] __attribute__((aligned(128)));
+	uint32_t hash[16] __attribute__((aligned(32)));
+	uint32_t digest[16] __attribute__((aligned(64)));
 	const uint32_t Htarg = ptarget[7];
-	
-	for (int i = 0; i < 19; i++) // revert everything but nonce
-		data[i] = swab32(pdata[i]);
-	uint32_t n = pdata[19] - 1;	
+
+	memset (block1, 0, 64);
+	block1[15] = 0x01000000;
+	for (int i = 0; i < 4; i++) block1[i+16] = swab32(pdata[i]);
+	for (int i = 0; i < 15; i++) // revert everything but nonce
+		block2[i] = swab32(pdata[i + 4]);
+
+	uint32_t n = pdata[19] - 1;
 	const uint32_t first_nonce = pdata[19];
 
-	do 
+	uint32_t Sigma[16] __attribute__((aligned(64)));
+	uint32_t  N[16] __attribute__((aligned(64)));
+	memset (N, 0, 64);
+	do
 	{
-		data[19] = ++n;
-		sph_gost512 (digest, data, 80);
-		sph_gost256 (hash, digest, 64); 
-		if (swab32(hash[0]) <= Htarg) 
+		block2[15] = ++n;
+		// first hash (GOST 34.11-512 over 80 bytes)
+		// second block
+		g_0_0 ((unsigned char *)digest, (unsigned char *)block2); // zero iv for 512 assumed
+		N[15] = 0x00020000; // 512
+		// first block
+		g_N((unsigned char *)N, (unsigned char *)digest, (unsigned char *)(block1 + 4));
+		N[15] |= 0x80000000; // +128
+		g_0((unsigned char *)digest, (unsigned char *)N);
+		AddModulo512(block2, block1 + 4, Sigma);
+		g_0((unsigned char *)digest, (unsigned char *)Sigma);
+
+		// second hash (GOST 34.11-256 over 64 bytes)
+		// second block
+		g_0_1((unsigned char *)hash, (unsigned char *)digest); // iv for 256 assumed (all bytes one)
+		N[15] = 0x00020000; // 512
+		// first block
+		g_N((unsigned char *)N, (unsigned char *)hash, (unsigned char *)block1);
+		g_0((unsigned char *)hash, (unsigned char *)N);
+		AddModulo512(digest, block1, Sigma);
+		g_0((unsigned char *)hash, (unsigned char *)Sigma);
+		// result is first 32 bytes of hash
+
+		
+		if (swab32(hash[0]) <= Htarg)
 		{
-			if (!Htarg && swab32(hash[1]) > ptarget[6]) // if difficulty >= 1 
+			if (!Htarg && swab32(hash[1]) > ptarget[6]) // if difficulty >= 1
 				continue;
-			pdata[19] = swab32 (data[19]);
+			pdata[19] = swab32 (block2[15]);
 			*hashes_done = n - first_nonce + 1;
+	
+			// uncomment following for verification
+			/*uint32_t data[20] __attribute__((aligned(128)));
+			uint32_t hash1[8] __attribute__((aligned(32)));
+			for (int i = 0; i < 20; i++) 
+				data[i] = swab32(pdata[i]);
+			sph_gost512 (digest, data, 80);
+			sph_gost256 (hash1, digest, 64);
+			if (hash[0] != hash1[0])
+				printf("verification failed\n");*/
+				
 			return 1;
 		}
 	} while (n < max_nonce && !work_restart[thr_id].restart);
-	
+
 	*hashes_done = n - first_nonce + 1;
 	pdata[19] = swab32(n);
 	return 0;
 }
-
 
 #ifdef __cplusplus
 }
