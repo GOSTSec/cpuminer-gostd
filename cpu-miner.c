@@ -654,11 +654,22 @@ static void stratum_gen_work(struct stratum_ctx *sctx, struct work *work)
 	memcpy(work->xnonce2, sctx->job.xnonce2, sctx->xnonce2_size);
 
 	/* Generate merkle root */
-	sha256d(merkle_root, sctx->job.coinbase, sctx->job.coinbase_size);
-	for (i = 0; i < sctx->job.merkle_count; i++) {
-		memcpy(merkle_root + 32, sctx->job.merkle[i], 32);
-		sha256d(merkle_root, merkle_root, 64);
-	}
+    if (opt_algo == ALGO_GOSTD)
+    {
+        gostd(merkle_root, sctx->job.coinbase, sctx->job.coinbase_size);
+	    for (i = 0; i < sctx->job.merkle_count; i++) {
+		    memcpy(merkle_root + 32, merkle_root, 32);
+		    gostd(merkle_root, merkle_root, 64);
+	    }
+    }
+    else
+    {
+	    sha256d(merkle_root, sctx->job.coinbase, sctx->job.coinbase_size);
+	    for (i = 0; i < sctx->job.merkle_count; i++) {
+		    memcpy(merkle_root + 32, sctx->job.merkle[i], 32);
+		    sha256d(merkle_root, merkle_root, 64);
+	    }
+    }
 	
 	/* Increment extranonce2 */
 	for (i = 0; i < sctx->xnonce2_size && !++sctx->job.xnonce2[i]; i++);

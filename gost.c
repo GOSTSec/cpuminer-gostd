@@ -1223,6 +1223,16 @@ void sph_gostd(void *cc, const void *data, size_t len)
 	hash_256(digest, 64, cc);
 }
 
+void gostd(void *output, const void *input, size_t len)
+{
+	unsigned char hash[64];
+
+	sph_gost512(hash, (const void*)input, len);
+	sph_gost256(hash, (const void*)hash, 64);
+
+	memcpy(output, hash, 32);
+}
+
 int scanhash_gostd(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
 	uint32_t max_nonce, unsigned long *hashes_done)
 {
