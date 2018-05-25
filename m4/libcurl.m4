@@ -73,7 +73,6 @@ AC_DEFUN([LIBCURL_CHECK_CONFIG],
      _libcurl_try_link=yes
 
      if test -d "$_libcurl_with" ; then
-        LIBCURL_CPPFLAGS="-I$withval/include"
         _libcurl_ldflags="-L$withval/lib"
         AC_PATH_PROG([_libcurl_config],[curl-config],[],
                      ["$withval/bin"])
@@ -106,7 +105,7 @@ AC_DEFUN([LIBCURL_CHECK_CONFIG],
               LIBCURL_CPPFLAGS=`$_libcurl_config --cflags`
            fi
            if test x"$LIBCURL" = "x" ; then
-              LIBCURL=`$_libcurl_config --libs`
+              LIBCURL=`$_libcurl_config --static-libs`
 
               # This is so silly, but Apple actually has a bug in their
               # curl-config script.  Fixed in Tiger, but there are still

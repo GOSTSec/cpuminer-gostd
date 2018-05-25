@@ -14,7 +14,7 @@
 
 /* Define to 1 if you have <alloca.h> and it should be used (not on Ultrix).
    */
-#define HAVE_ALLOCA_H 1
+/* #undef HAVE_ALLOCA_H */
 
 /* Define to 1 if you have the declaration of `be32dec', and to 0 if you
    don't. */
@@ -57,7 +57,7 @@
 #define HAVE_STRING_H 1
 
 /* Define to 1 if you have the <syslog.h> header file. */
-#define HAVE_SYSLOG_H 1
+/* #undef HAVE_SYSLOG_H */
 
 /* Define to 1 if you have the <sys/endian.h> header file. */
 /* #undef HAVE_SYS_ENDIAN_H */
@@ -69,7 +69,7 @@
 #define HAVE_SYS_STAT_H 1
 
 /* Define to 1 if you have the <sys/sysctl.h> header file. */
-#define HAVE_SYS_SYSCTL_H 1
+/* #undef HAVE_SYS_SYSCTL_H */
 
 /* Define to 1 if you have the <sys/types.h> header file. */
 #define HAVE_SYS_TYPES_H 1
@@ -81,7 +81,7 @@
 #define LIBCURL_FEATURE_ASYNCHDNS 1
 
 /* Defined if libcurl supports IDN */
-#define LIBCURL_FEATURE_IDN 1
+/* #undef LIBCURL_FEATURE_IDN */
 
 /* Defined if libcurl supports IPv6 */
 #define LIBCURL_FEATURE_IPV6 1
