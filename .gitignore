@@ -1,0 +1,15 @@
+.deps
+/autom4te.cache
+/config.*
+aclocal.m4
+compile
+depcomp
+install-sh
+missing
+configure
+cpuminer-config.*
+*.o
+Makefile
+Makefile.in
+stamp-h1
+*.exe

@@ -52,7 +52,7 @@ extern "C"{
 
 //--------------------------------------------------------------------------------------------
 //
-//	stribog implementation
+// stribog implementation
 //
 //--------------------------------------------------------------------------------------------
 
@@ -938,7 +938,7 @@ void F(unsigned char *state)
 {
 	uint64_t return_state[8];
 	FS (state, return_state);
-	memcpy(state, return_state, 64);	
+	memcpy(state, return_state, 64);
 }
 
 #define KeySchedule(tmp,K1,i) AddXor512(K1,C[i],tmp); FS((const unsigned char *)tmp,K1);
@@ -951,53 +951,53 @@ void E(const unsigned char *K,const unsigned char *m, unsigned char *state)
 	memcpy (K1, K, 64);
 	AddXor512(m,K1,state);
 
-    KeySchedule(state1,K1,0);
+	KeySchedule(state1,K1,0);
 	FS(state, state1);	
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,1);
+	KeySchedule(state1,K1,1);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,2);
+	KeySchedule(state1,K1,2);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,3);
+	KeySchedule(state1,K1,3);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,4);
+	KeySchedule(state1,K1,4);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,5);
+	KeySchedule(state1,K1,5);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,6);
+	KeySchedule(state1,K1,6);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,7);
+	KeySchedule(state1,K1,7);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,8);
+	KeySchedule(state1,K1,8);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,9);
+	KeySchedule(state1,K1,9);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,10);
+	KeySchedule(state1,K1,10);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 
-    KeySchedule(state1,K1,11);
+	KeySchedule(state1,K1,11);
 	FS(state, state1);
-    AddXor512(state1,K1,state);
+	AddXor512(state1,K1,state);
 #else
 	int i = 0;
 	uint64_t state1[8], K1[8];
@@ -1279,14 +1279,13 @@ int scanhash_gostd(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
 		g_0((unsigned char *)hash, (unsigned char *)Sigma);
 		// result is first 32 bytes of hash
 
-		
 		if (swab32(hash[0]) <= Htarg)
 		{
 			if (!Htarg && swab32(hash[1]) > ptarget[6]) // if difficulty >= 1
 				continue;
 			pdata[19] = swab32 (block2[15]);
 			*hashes_done = n - first_nonce + 1;
-	
+
 			// uncomment following for verification
 			/*uint32_t data[20] __attribute__((aligned(128)));
 			uint32_t hash1[8] __attribute__((aligned(32)));
@@ -1296,7 +1295,7 @@ int scanhash_gostd(int thr_id, uint32_t *pdata, const uint32_t *ptarget,
 			sph_gost256 (hash1, digest, 64);
 			if (hash[0] != hash1[0])
 				printf("verification failed\n");*/
-				
+
 			return 1;
 		}
 	} while (n < max_nonce && !work_restart[thr_id].restart);
