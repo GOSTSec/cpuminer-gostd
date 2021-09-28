@@ -8,8 +8,6 @@ ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST	= example-cfg.json nomacro.pl
 SUBDIRS		= compat
 
-INCLUDES	= $(PTHREAD_FLAGS) -fno-strict-aliasing $(JANSSON_INCLUDES)
-
 bin_PROGRAMS	= minerd
 minerd_SOURCES	= elist.h miner.h compat.h \
 	cpu-miner.c util.c \
@@ -19,12 +17,10 @@ minerd_SOURCES	= elist.h miner.h compat.h \
 	aes_helper.c cubehash.c shavite.c simd.c echo.c luffa.c\
 	quark.c gost.c Xcoin.c
 
-# Linux (default)
-#minerd_LDFLAGS = $(PTHREAD_FLAGS)
-# Windows
-minerd_LDFLAGS = $(PTHREAD_FLAGS) -Wl,-Bstatic -static-libgcc
-minerd_DEFS    = -DCURL_STATICLIB -DWIN32 -DWIN32_LEAN_AND_MEAN
+## Uncomment on MSYS2 Windows build only:
+# minerd_LDFLAGS = $(PTHREAD_FLAGS) -Wl,-Bstatic -static-libgcc
+# minerd_DEFS    = -DCURL_STATICLIB -DWIN32 -DWIN32_LEAN_AND_MEAN
+##
 
 minerd_LDADD    = @LIBCURL@ @JANSSON_LIBS@ @PTHREAD_LIBS@ @WS2_LIBS@
-minerd_CPPFLAGS = @LIBCURL_CPPFLAGS@
-
+minerd_CPPFLAGS = $(PTHREAD_FLAGS) -fno-strict-aliasing $(JANSSON_INCLUDES) -fPIC @LIBCURL_CPPFLAGS@
