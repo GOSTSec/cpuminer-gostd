@@ -33,7 +33,7 @@ typedef struct {
 	sph_echo512_context		echo1;
 } Xhash_context_holder;
 
-Xhash_context_holder base_contexts;
+static Xhash_context_holder base_contexts;
 
 void init_Xhash_contexts()
 {
