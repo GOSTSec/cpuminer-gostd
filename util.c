@@ -153,23 +153,6 @@ static size_t all_data_cb(const void *ptr, size_t size, size_t nmemb,
 	return len;
 }
 
-static size_t upload_data_cb(void *ptr, size_t size, size_t nmemb,
-			     void *user_data)
-{
-	struct upload_buffer *ub = user_data;
-	int len = size * nmemb;
-
-	if (len > ub->len - ub->pos)
-		len = ub->len - ub->pos;
-
-	if (len) {
-		memcpy(ptr, ub->buf + ub->pos, len);
-		ub->pos += len;
-	}
-
-	return len;
-}
-
 #if LIBCURL_VERSION_NUM >= 0x071200
 static int seek_data_cb(void *user_data, curl_off_t offset, int origin)
 {
@@ -301,7 +284,6 @@ json_t *json_rpc_call(CURL *curl, const char *url,
 	json_t *val, *err_val, *res_val;
 	int rc;
 	struct data_buffer all_data = {0};
-	struct upload_buffer upload_data;
 	json_error_t err;
 	struct curl_slist *headers = NULL;
 	char len_hdr[64];
@@ -323,10 +305,12 @@ json_t *json_rpc_call(CURL *curl, const char *url,
 	curl_easy_setopt(curl, CURLOPT_TCP_NODELAY, 1);
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, all_data_cb);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, &all_data);
-	curl_easy_setopt(curl, CURLOPT_READFUNCTION, upload_data_cb);
-	curl_easy_setopt(curl, CURLOPT_READDATA, &upload_data);
 #if LIBCURL_VERSION_NUM >= 0x071200
 	curl_easy_setopt(curl, CURLOPT_SEEKFUNCTION, &seek_data_cb);
+	struct upload_buffer upload_data;
+	upload_data.buf = rpc_req;
+	upload_data.len = strlen(rpc_req);
+	upload_data.pos = 0;
 	curl_easy_setopt(curl, CURLOPT_SEEKDATA, &upload_data);
 #endif
 	curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, curl_err_str);
@@ -347,15 +331,11 @@ json_t *json_rpc_call(CURL *curl, const char *url,
 		curl_easy_setopt(curl, CURLOPT_SOCKOPTFUNCTION, sockopt_keepalive_cb);
 #endif
 	curl_easy_setopt(curl, CURLOPT_POST, 1);
+	curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, strlen (rpc_req));
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, rpc_req);
 
 	if (opt_protocol)
 		applog(LOG_DEBUG, "JSON protocol request:\n%s\n", rpc_req);
-
-	upload_data.buf = rpc_req;
-	upload_data.len = strlen(rpc_req);
-	upload_data.pos = 0;
-	sprintf(len_hdr, "Content-Length: %lu",
-		(unsigned long) upload_data.len);
 
 	headers = curl_slist_append(headers, "Content-Type: application/json");
 	headers = curl_slist_append(headers, len_hdr);
